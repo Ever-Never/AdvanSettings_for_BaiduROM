@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.edu.ncwu.www"
+   
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <!--android:sharedUserId="android.uid.system"  -->
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="20" />
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name" >
+        <activity
+            android:name="cn.edu.ncwu.www.MPreferenceActivity"
+            android:label="@string/app_name"
+            android:theme="@*android:style/Theme.DeviceDefault.Light.DarkActionBar"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+               
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="cn.edu.ncwu.www.receiver.ReStoreStateReceiver" >
+            <intent-filter android:priority="100" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.REBOOT" />
+
+</manifest>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:IconPreferenceScreen="http://schemas.android.com/apk/res/cn.edu.ncwu.www" >
+
+    <!-- 拍照、微博 -->
+
+
+    <!--
+             <cn.edu.ncwu.www.preferences.MChecKboxPreference
+            IconPreferenceScreen:resloverkey="swing_lock_enabled"
+            android:key="screencap"
+            android:summary="左右甩动锁定屏幕"
+            android:title="甩动锁屏" >
+        </cn.edu.ncwu.www.preferences.MChecKboxPreference>
+    -->
+    <!--
+             <Preference
+            android:key="schedulepoweronoff_settings"
+            android:summary=" 进入定时开关机"
+            android:title="定时开关机" >
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.mediatek.schpwronoff.AlarmClock"
+                android:targetPackage="com.mediatek.schpwronoff" />
+        </Preference>
+    -->
+    <!--
+             <Preference
+            android:key="gesture"
+            android:summary="中兴原厂手势"
+            android:title="动作和手势" >
+            <intent
+                android:action="com.zte.zgesture.MainSettingActivity"
+                android:targetClass="com.zte.zgesture.MainSettingActivity"
+                android:targetPackage="com.zte.zgesture" />
+        </Preference>
+        <Preference
+            android:key="mipop"
+            android:summary="屏幕助手"
+            android:title="MIPop" >
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.android.mipop.MIPopActivity"
+                android:targetPackage="com.android.mipop" />
+        </Preference>
+    -->
+
+    <PreferenceCategory android:title="操作" >
+        <Preference
+            android:key="gesture_and_motion"
+            android:title="手势和动作" >
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.zte.zgesture.MainSettingActivity"
+                android:targetPackage="com.zte.zgesture" />
+        </Preference>
+        <Preference
+            android:key="smartshow"
+            android:title="智能分屏" >
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.powermo.SmartBar.MasterEntryActivity"
+                android:targetPackage="com.powermo.SmartBar" />
+        </Preference>
+        <Preference
+            android:key="mipop"
+            android:title="屏幕助手" >
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.android.mipop.MIPopActivity"
+                android:targetPackage="com.android.mipop" />
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="显示" >
+        <Preference
+            android:key="screen_effect"
+            android:title="显示效果" >
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.android.stocksettings.ScreenEffectSettings"
+                android:targetPackage="com.android.stocksettings" />
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="电源" >
+        <Preference
+            android:key="quick_start"
+            android:title="快速启动" >
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.android.stocksettings.QuickStartHelper"
+                android:targetPackage="com.android.stocksettings" />
+        </Preference>
+        <Preference
+            android:key="schedulepoweronoff"
+            android:title="定时开关机" >
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.android.stocksettings.powercontrol.ScheduledPowerOnOffActivity"
+                android:targetPackage="com.android.stocksettings" />
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="网络" >
+        <Preference
+            android:key="hotspot"
+            android:title="WLAN热点" >
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.android.stocksettings.wifi.HotspotSettings"
+                android:targetPackage="com.android.stocksettings" />
+        </Preference>
+        <Preference
+            android:key="pppoe"
+            android:title="拨号上网" >
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.android.stocksettings.pppoe.PppoeSettings"
+                android:targetPackage="com.android.stocksettings" />
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="高级设置" >
+        <CheckBoxPreference
+            android:key="touch_gesture"
+            android:summaryOff="双击亮屏关闭"
+            android:summaryOn="双击亮屏已经打开"
+            android:title="双击亮屏" />
+        <CheckBoxPreference
+            android:key="glovemode"
+            android:summaryOff="手套模式关闭"
+            android:summaryOn="手套模式已经打开"
+            android:title="手套模式" />
+
+        <PreferenceScreen
+            android:key="recovery"
+            android:summary="点击重启到recovery模式"
+            android:title="重启到recovery" />
+        <PreferenceScreen
+            android:key="replaceRecovery"
+            android:summary="点击将更换recovery"
+            android:title="更换recovery" />
+        <PreferenceScreen
+            android:key="flashOta"
+            android:summary="点击选择刷机包"
+            android:title="刷入ROM" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="交流与反馈" >
+        <cn.edu.ncwu.www.preferences.ButtonPreferences
+            IconPreferenceScreen:QQqun=""
+            IconPreferenceScreen:action="android.intent.action.VIEW"
+            IconPreferenceScreen:category="android.intent.category.DEFAULT"
+            IconPreferenceScreen:connection="http://weibo.com/2205324430/profile?rightmod=1&amp;wvr=5&amp;mod=personinfo"
+            IconPreferenceScreen:icon="@drawable/weibo"
+            IconPreferenceScreen:toasttext="请安装新浪客户端"
+            IconPreferenceScreen:uriconnection="sinaweibo://userinfo?uid=2205324430&amp;extparam=100103type=1&amp;cuid=2679559813&amp;q=EverNever_NCWU&amp;t=0&amp;sid=t_wap_android&amp;category=1&amp;pos=1"
+            android:key="toggle_goome_weibo"
+            android:summary="@string/link_weibo_summary"
+            android:title="@string/link_weibo_title" >
+
+            <!-- <intent/> -->
+        </cn.edu.ncwu.www.preferences.ButtonPreferences>
+        <cn.edu.ncwu.www.preferences.ButtonPreferences
+            IconPreferenceScreen:QQqun="335708959"
+            IconPreferenceScreen:action="android.intent.action.VIEW"
+            IconPreferenceScreen:category="android.intent.category.BROWSABLE"
+            IconPreferenceScreen:connection=""
+            IconPreferenceScreen:icon="@drawable/qun"
+            IconPreferenceScreen:toasttext="qq群号已经复制到剪贴板，复制添加"
+            IconPreferenceScreen:uriconnection="mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Fk%3DVnmvx_RgIo3Y663w3bXFALKiLicJhP6F"
+            android:key="qq"
+            android:summary="欢迎加群交流,点击复制号到剪贴板"
+            android:title="qq群" >
+        </cn.edu.ncwu.www.preferences.ButtonPreferences>
+    </PreferenceCategory>
+
+</PreferenceScreen>
