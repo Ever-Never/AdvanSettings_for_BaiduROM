@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.os.UserHandle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -22,6 +21,9 @@ import android.widget.Toast;
 
 import cn.edu.ncwu.www.tools.FileUtil;
 import cn.edu.ncwu.www.tools.RootCmd;
+
+import com.igexin.sdk.PushManager;
+import com.igexin.sdk.Tag;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,26 +45,34 @@ public class MPreferenceActivity extends PreferenceActivity {
     public static String TOUCH_GESTURE_KEY = "touch_gesture";
     public static String PROC_TOUCH_GESTURE = "/proc/touchscreen_gesture_enable";
     public static String PROC_GLOVE_MODE = "/proc/gloved_finger_switch";
+    private PushManager pm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        
+        pm = PushManager.getInstance() ;
+        pm.initialize(this.getApplicationContext());
+        Tag tag = new Tag( ) ;
+        tag.setName("S291") ;
+        Tag[] tags=new Tag[1]; 
+        tags[0] = tag ;
+        pm.setTag(this, tags) ;
+       
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sp.edit();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setDisplayShowHomeEnabled(false);
-     
-//        getActionBar().setDisplayShowTitleEnabled(false);
-//        getActionBar().setDisplayShowHomeEnabled(false);
+
+        // getActionBar().setDisplayShowTitleEnabled(false);
+        // getActionBar().setDisplayShowHomeEnabled(false);
         addPreferencesFromResource(R.xml.preferences);
         flashOta = (PreferenceScreen) findPreference("flashOta");
         recovery = (PreferenceScreen) findPreference("recovery");
         replaceRecovery = (PreferenceScreen) findPreference("replaceRecovery");
         touchGesture = (CheckBoxPreference) findPreference("touch_gesture");
         gloveMode = (CheckBoxPreference) findPreference("glovemode");
-             
+
         gloveMode.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             @Override
@@ -153,8 +163,9 @@ public class MPreferenceActivity extends PreferenceActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             // TODO Auto-generated method stub
-//                            RootCmd.RunRootCmd("reboot recovery");
-                            ((PowerManager)getSystemService(Context.POWER_SERVICE)).reboot("recovery");
+                            // RootCmd.RunRootCmd("reboot recovery");
+                            ((PowerManager) getSystemService(Context.POWER_SERVICE))
+                                    .reboot("recovery");
 
                         }
                     }).show();
@@ -232,8 +243,8 @@ public class MPreferenceActivity extends PreferenceActivity {
                                         .write(("echo '--update_package=" + file.getAbsolutePath() + "' >> /cache/recovery/command\n")
                                                 .getBytes());
                                 localOutputStream
-                                .write(("reboot recovery\n")
-                                        .getBytes());
+                                        .write(("reboot recovery\n")
+                                                .getBytes());
                                 localOutputStream.flush();
                             } catch (IOException e) {
                                 // TODO Auto-generated catch block

@@ -1,12 +1,17 @@
 
 package cn.edu.ncwu.www.tools;
 
+import android.content.Context;
+
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class FileUtil {
 
@@ -25,7 +30,57 @@ public class FileUtil {
         return new File(file).exists();
     }
 
+    private static boolean deleteDir(File dir)
+    {
+        String[] arrayOfString = null;
+        if (dir.isDirectory())
+            arrayOfString = dir.list();
+        for (int i = 0;; i++)
+        {
+            if (i >= arrayOfString.length)
+                return dir.delete();
+            if (!deleteDir(new File(dir, arrayOfString[i])))
+                return false;
+        }
+    }
 
+    public static String execute(String shell, String cmd)
+    {
+        String localObject = "";
+        try
+        {
+            Process localProcess = Runtime.getRuntime().exec(shell);
+            if (localProcess != null)
+            {
+                DataOutputStream localDataOutputStream = new DataOutputStream(
+                        localProcess.getOutputStream());
+                DataInputStream localDataInputStream = new DataInputStream(
+                        localProcess.getInputStream());
+                localDataOutputStream.writeBytes(cmd + "\n");
+                localDataOutputStream.flush();
+                localDataOutputStream.writeBytes("exit\n");
+                localDataOutputStream.flush();
+                localProcess.waitFor();
+                while (true)
+                {
+                    String str1 = localDataInputStream.readLine();
+                    if (str1 == null)
+                        return localObject;
+                    localObject = localObject + str1;
+                    String str2 = localObject + "\n";
+                    localObject = str2;
+                }
+            }
+        } catch (IOException localIOException)
+        {
+            localIOException.printStackTrace();
+            return localObject;
+        } catch (InterruptedException localInterruptedException)
+        {
+            localInterruptedException.printStackTrace();
+        }
+        return localObject;
+    }
 
     public static void writeValue(String file, String value)
     {
@@ -53,6 +108,7 @@ public class FileUtil {
             return str;
         return defaultString;
     }
+    
 
     public static boolean getFileValueAsBoolean(String file, boolean bool)
     {

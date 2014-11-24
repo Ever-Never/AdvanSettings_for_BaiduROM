@@ -141,6 +141,16 @@
             android:key="flashOta"
             android:summary="点击选择刷机包"
             android:title="刷入ROM" />
+
+        <PreferenceScreen
+            android:key="download_rom"
+            android:summary=" 下载完整包或者ota升级包"
+            android:title="下载ROM" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://pan.baidu.com/s/1qW2puNy"
+                 />
+        </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="交流与反馈" >
         <cn.edu.ncwu.www.preferences.ButtonPreferences
