@@ -51,21 +51,21 @@ public class MPreferenceActivity extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        pm = PushManager.getInstance() ;
+        pm = PushManager.getInstance();
         pm.initialize(this.getApplicationContext());
-        Tag tag = new Tag( ) ;
-        tag.setName("S291") ;
-        Tag[] tags=new Tag[1]; 
-        tags[0] = tag ;
-        pm.setTag(this, tags) ;
-       
+        Tag tag = new Tag();
+        tag.setName("S291");
+        Tag[] tags = new Tag[1];
+        tags[0] = tag;
+        pm.setTag(this, tags);
+
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sp.edit();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setDisplayShowHomeEnabled(false);
 
-        // getActionBar().setDisplayShowTitleEnabled(false);
-        // getActionBar().setDisplayShowHomeEnabled(false);
+        getActionBar().setDisplayShowTitleEnabled(false);
+        getActionBar().setDisplayShowHomeEnabled(false);
         addPreferencesFromResource(R.xml.preferences);
         flashOta = (PreferenceScreen) findPreference("flashOta");
         recovery = (PreferenceScreen) findPreference("recovery");

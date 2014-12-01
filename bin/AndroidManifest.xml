@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.edu.ncwu.www"
+    android:sharedUserId="android.uid.system"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <!-- android:sharedUserId="android.uid.system" -->
-
+    <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="20" />
@@ -19,8 +20,6 @@
             android:theme="@*android:style/Theme.DeviceDefault.Light.DarkActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -31,11 +30,13 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="cn.edu.ncwu.www.receiver.ReStoreStateReceiver" >
+        <!--
+             <receiver android:name="cn.edu.ncwu.www.receiver.ReStoreStateReceiver" >
             <intent-filter android:priority="100" >
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        -->
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->
         <meta-data
@@ -129,7 +130,6 @@
             android:process=":pushservice" />
     </application>
 
-   
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
