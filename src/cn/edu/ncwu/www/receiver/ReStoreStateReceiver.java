@@ -16,9 +16,9 @@ public class ReStoreStateReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context arg0, Intent arg1) {
-        MPreferenceActivity.restore(arg0,MPreferenceActivity.PROC_GLOVE_MODE,MPreferenceActivity.GLOVE_MODE_KEY) ;
+//        MPreferenceActivity.restore(arg0,MPreferenceActivity.PROC_GLOVE_MODE,MPreferenceActivity.GLOVE_MODE_KEY) ;
         Log.d("advanceSettings", MPreferenceActivity.PROC_GLOVE_MODE) ;
-        MPreferenceActivity.restore(arg0,MPreferenceActivity.PROC_TOUCH_GESTURE,MPreferenceActivity.TOUCH_GESTURE_KEY) ;
+//        MPreferenceActivity.restore(arg0,MPreferenceActivity.PROC_TOUCH_GESTURE,MPreferenceActivity.TOUCH_GESTURE_KEY) ;
         Log.d("advanceSettings", MPreferenceActivity.PROC_TOUCH_GESTURE) ;
   /*      if (arg1.getAction().equals(ACTION)) {
             sharedPreference = arg0.getSharedPreferences(MPreferenceActivity.sharedPreferenceName,

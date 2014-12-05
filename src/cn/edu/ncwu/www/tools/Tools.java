@@ -22,7 +22,7 @@ public class Tools {
             public void run() {
                 // TODO Auto-generated method stub
                 String cmd = "dd if=" + reoveryimage + " of=" + fstabPath;
-                //RootCmd.execute("su", cmd);
+                // RootCmd.execute("su", cmd);
                 Toast.makeText(_context, "安装recovery成功", Toast.LENGTH_LONG).show();
 
             }
@@ -32,8 +32,4 @@ public class Tools {
 
     }
 
-    public static boolean checkRoot()
-    {
-        return true;
-    }
 }
