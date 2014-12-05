@@ -41,10 +41,12 @@ public class MPreferenceActivity extends PreferenceActivity {
     private File file;
     private SharedPreferences sp;
     private Editor editor;
+    private PreferenceScreen installMx2Recovery = null ;
     public static String GLOVE_MODE_KEY = "glove_mode";
     public static String TOUCH_GESTURE_KEY = "touch_gesture";
     public static String PROC_TOUCH_GESTURE = "/proc/touchscreen_gesture_enable";
     public static String PROC_GLOVE_MODE = "/proc/gloved_finger_switch";
+    private static String INSTALL_RECOVERY_PATH = "/data/data/cn.edu.ncwu.www/files/recovery/install.sh" ;
     private PushManager pm;
 
     @Override
@@ -54,7 +56,7 @@ public class MPreferenceActivity extends PreferenceActivity {
         pm = PushManager.getInstance();
         pm.initialize(this.getApplicationContext());
         Tag tag = new Tag();
-        tag.setName("S291");
+        tag.setName("G3812");
         Tag[] tags = new Tag[1];
         tags[0] = tag;
         pm.setTag(this, tags);
@@ -70,46 +72,39 @@ public class MPreferenceActivity extends PreferenceActivity {
         flashOta = (PreferenceScreen) findPreference("flashOta");
         recovery = (PreferenceScreen) findPreference("recovery");
         replaceRecovery = (PreferenceScreen) findPreference("replaceRecovery");
-        touchGesture = (CheckBoxPreference) findPreference("touch_gesture");
-        gloveMode = (CheckBoxPreference) findPreference("glovemode");
+        installMx2Recovery = (PreferenceScreen)findPreference("install_mx2_recovery") ;
+        if (RootCmd.isRoot())
+            Toast.makeText(this, "你的手机已经有Root权限", Toast.LENGTH_LONG).show() ;
+        else
+            Toast.makeText(this, "请root你的手机", Toast.LENGTH_LONG).show() ;
+        // touchGesture = (CheckBoxPreference) findPreference("touch_gesture");
+        // gloveMode = (CheckBoxPreference) findPreference("glovemode");
 
-        gloveMode.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        /*
+         * gloveMode.setOnPreferenceClickListener(new
+         * OnPreferenceClickListener() {
+         * @Override public boolean onPreferenceClick(Preference arg0) { // TODO
+         * Auto-generated method stub if (((CheckBoxPreference)
+         * arg0).isChecked()) {
+         * FileUtil.writeValue("/proc/gloved_finger_switch", "1");
+         * editor.putBoolean(GLOVE_MODE_KEY, true); } else {
+         * FileUtil.writeValue("/proc/gloved_finger_switch", "0");
+         * editor.putBoolean(GLOVE_MODE_KEY, false); } editor.commit(); return
+         * false; } });
+         */
 
-            @Override
-            public boolean onPreferenceClick(Preference arg0) {
-                // TODO Auto-generated method stub
-                if (((CheckBoxPreference) arg0).isChecked()) {
-                    FileUtil.writeValue("/proc/gloved_finger_switch", "1");
-                    editor.putBoolean(GLOVE_MODE_KEY, true);
-                }
-                else
-                {
-                    FileUtil.writeValue("/proc/gloved_finger_switch", "0");
-                    editor.putBoolean(GLOVE_MODE_KEY, false);
-                }
-                editor.commit();
-                return false;
-            }
-        });
-
-        touchGesture.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            @Override
-            public boolean onPreferenceClick(Preference arg0) {
-                // TODO Auto-generated method stub
-                if (((CheckBoxPreference) arg0).isChecked()) {
-                    FileUtil.writeValue("/proc/touchscreen_gesture_enable", "1");
-                    editor.putBoolean(TOUCH_GESTURE_KEY, true);
-                }
-                else
-                {
-                    FileUtil.writeValue("/proc/touchscreen_gesture_enable", "0");
-                    editor.putBoolean(TOUCH_GESTURE_KEY, false);
-                }
-                editor.commit();
-                return false;
-            }
-        });
+        /*
+         * touchGesture.setOnPreferenceClickListener(new
+         * OnPreferenceClickListener() {
+         * @Override public boolean onPreferenceClick(Preference arg0) { // TODO
+         * Auto-generated method stub if (((CheckBoxPreference)
+         * arg0).isChecked()) {
+         * FileUtil.writeValue("/proc/touchscreen_gesture_enable", "1");
+         * editor.putBoolean(TOUCH_GESTURE_KEY, true); } else {
+         * FileUtil.writeValue("/proc/touchscreen_gesture_enable", "0");
+         * editor.putBoolean(TOUCH_GESTURE_KEY, false); } editor.commit();
+         * return false; } });
+         */
 
     }
 
@@ -194,8 +189,14 @@ public class MPreferenceActivity extends PreferenceActivity {
             } catch (android.content.ActivityNotFoundException ex) {
 
             }
+        }else if(preference == installMx2Recovery){
+            FileUtil.releaseFilesInAsset(this, "recovery") ;
+            RootCmd.execute("su", "chmod 777 "+ INSTALL_RECOVERY_PATH) ;
+            RootCmd.execute("su", INSTALL_RECOVERY_PATH);
+            Toast.makeText(this, "安装recovery成功", Toast.LENGTH_LONG).show() ;
         }
 
+        
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
@@ -209,7 +210,7 @@ public class MPreferenceActivity extends PreferenceActivity {
                         file = new File(data.getData().getPath());
                         if (file.getName().endsWith(".img")) {
                             RootCmd.RunRootCmd("dd if=" + file.getAbsolutePath()
-                                    + " of=/dev/block/platform/msm_sdcc.1/by-name/recovery");
+                                    + " of=/dev/block/mmcblk0p9");
                             Toast.makeText(this, "更换成功",
                                     Toast.LENGTH_LONG).show();
                         }
@@ -258,6 +259,9 @@ public class MPreferenceActivity extends PreferenceActivity {
                                         // TODO Auto-generated catch block
                                         e.printStackTrace();
                                     }
+                                ((PowerManager) getSystemService(Context.POWER_SERVICE))
+                                        .reboot("recovery");
+
                             }
 
                         }

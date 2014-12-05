@@ -1,0 +1,7 @@
+# mount point   fstype          device
+
+#/mnt/sdcard     vfat    /data/media
+/system		    ext4	/dev/block/mmcblk0p2
+/data		    ext4	/dev/block/mmcblk0p3
+/cache		    ext4	/dev/block/mmcblk0p4
+/mnt/sdcard     datamedia   /dev/null

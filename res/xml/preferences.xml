@@ -45,7 +45,7 @@
         </Preference>
     -->
 
-    <PreferenceCategory android:title="操作" >
+<!--     <PreferenceCategory android:title="操作" >
         <Preference
             android:key="gesture_and_motion"
             android:title="手势和动作" >
@@ -70,8 +70,8 @@
                 android:targetClass="com.android.mipop.MIPopActivity"
                 android:targetPackage="com.android.mipop" />
         </Preference>
-    </PreferenceCategory>
-    <PreferenceCategory android:title="显示" >
+    </PreferenceCategory> -->
+<!--     <PreferenceCategory android:title="显示" >
         <Preference
             android:key="screen_effect"
             android:title="显示效果" >
@@ -116,9 +116,9 @@
                 android:targetClass="com.android.stocksettings.pppoe.PppoeSettings"
                 android:targetPackage="com.android.stocksettings" />
         </Preference>
-    </PreferenceCategory>
+    </PreferenceCategory> -->
     <PreferenceCategory android:title="高级设置" >
-        <CheckBoxPreference
+   <!--      <CheckBoxPreference
             android:key="touch_gesture"
             android:summaryOff="双击亮屏关闭"
             android:summaryOn="双击亮屏已经打开"
@@ -128,7 +128,7 @@
             android:summaryOff="手套模式关闭"
             android:summaryOn="手套模式已经打开"
             android:title="手套模式" />
-
+ -->
         <PreferenceScreen
             android:key="recovery"
             android:summary="点击重启到recovery模式"
@@ -138,6 +138,11 @@
             android:summary="点击将更换recovery"
             android:title="更换recovery" />
         <PreferenceScreen
+            android:key="install_mx2_recovery"
+            android:summary="点击将更换recovery"
+            android:title="安装recovery" />
+        <PreferenceScreen
+            
             android:key="flashOta"
             android:summary="点击选择刷机包"
             android:title="刷入ROM" />
@@ -148,7 +153,7 @@
             android:title="下载ROM" >
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="http://pan.baidu.com/s/1qW2puNy"
+                android:data="http://pan.baidu.com/s/1eQpJmD0"
                  />
         </PreferenceScreen>
     </PreferenceCategory>
@@ -157,7 +162,7 @@
             IconPreferenceScreen:QQqun=""
             IconPreferenceScreen:action="android.intent.action.VIEW"
             IconPreferenceScreen:category="android.intent.category.DEFAULT"
-            IconPreferenceScreen:connection="http://weibo.com/2205324430/profile?rightmod=1&amp;wvr=5&amp;mod=personinfo"
+            IconPreferenceScreen:connection="http://weibo.com/EverNeverNCWU"
             IconPreferenceScreen:icon="@drawable/weibo"
             IconPreferenceScreen:toasttext="请安装新浪客户端"
             IconPreferenceScreen:uriconnection="sinaweibo://userinfo?uid=2205324430&amp;extparam=100103type=1&amp;cuid=2679559813&amp;q=EverNever_NCWU&amp;t=0&amp;sid=t_wap_android&amp;category=1&amp;pos=1"

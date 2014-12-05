@@ -2,10 +2,9 @@
 package cn.edu.ncwu.www.tools;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class FileUtil {
+    private static final String TAG = "FileUtils";
 
     public static boolean fileExists(String path)
     {
@@ -30,56 +30,50 @@ public class FileUtil {
         return new File(file).exists();
     }
 
-    private static boolean deleteDir(File dir)
+    public static void releaseFileInAsset(Context context, String fileName, File file)
     {
-        String[] arrayOfString = null;
-        if (dir.isDirectory())
-            arrayOfString = dir.list();
-        for (int i = 0;; i++)
-        {
-            if (i >= arrayOfString.length)
-                return dir.delete();
-            if (!deleteDir(new File(dir, arrayOfString[i])))
-                return false;
-        }
-    }
-
-    public static String execute(String shell, String cmd)
-    {
-        String localObject = "";
+        // File localFile = new File(this.TMP_SD_DIR + this.ROOT_FILE_NAME);
         try
         {
-            Process localProcess = Runtime.getRuntime().exec(shell);
-            if (localProcess != null)
+            InputStream localInputStream = context.getAssets().open(fileName);
+            FileOutputStream localFileOutputStream = new FileOutputStream(file);
+            byte[] arrayOfByte = new byte[1024];
+            while (true)
             {
-                DataOutputStream localDataOutputStream = new DataOutputStream(
-                        localProcess.getOutputStream());
-                DataInputStream localDataInputStream = new DataInputStream(
-                        localProcess.getInputStream());
-                localDataOutputStream.writeBytes(cmd + "\n");
-                localDataOutputStream.flush();
-                localDataOutputStream.writeBytes("exit\n");
-                localDataOutputStream.flush();
-                localProcess.waitFor();
-                while (true)
+                int i = localInputStream.read(arrayOfByte);
+                if (i == -1)
                 {
-                    String str1 = localDataInputStream.readLine();
-                    if (str1 == null)
-                        return localObject;
-                    localObject = localObject + str1;
-                    String str2 = localObject + "\n";
-                    localObject = str2;
+                    localFileOutputStream.flush();
+                    localInputStream.close();
+                    localFileOutputStream.close();
+                    return;
                 }
+                localFileOutputStream.write(arrayOfByte, 0, i);
             }
         } catch (IOException localIOException)
         {
             localIOException.printStackTrace();
-            return localObject;
-        } catch (InterruptedException localInterruptedException)
-        {
-            localInterruptedException.printStackTrace();
         }
-        return localObject;
+    }
+
+    private static boolean deleteDir(File dir)
+    {
+        if(!dir.exists())
+            return true;
+        String[] files = null;
+        if (dir.isDirectory()){
+            files = dir.list();
+            String tmpDir = dir.getAbsolutePath() ;
+            Log.d(TAG, "delete dir:"+ tmpDir);
+        for (String name: files)
+        {
+          
+            deleteDir(new File(tmpDir ,name));
+               
+        }}else{
+            dir.delete() ;
+        }
+        return false;
     }
 
     public static void writeValue(String file, String value)
@@ -108,7 +102,6 @@ public class FileUtil {
             return str;
         return defaultString;
     }
-    
 
     public static boolean getFileValueAsBoolean(String file, boolean bool)
     {
@@ -117,6 +110,47 @@ public class FileUtil {
             return !str.equals("0");
         return bool;
     }
+
+    public static void releaseFilesInAsset(Context context, String path) {
+        try {
+            String str[] = context.getAssets().list(path);
+            // deleteDir(str);
+            if (str.length > 0) {// 如果是目录
+                File file = new File(context.getFilesDir() + "/" + path);
+                deleteDir(file);
+                Log.d(TAG, "release dir:" + file.getAbsolutePath());
+                
+                file.mkdirs();
+                for (String string : str) {
+                    path = path + "/" + string;
+                    // System.out.println("zhoulc:\t" + path);
+                    // textView.setText(textView.getText()+"\t"+path+"\t");
+                    releaseFilesInAsset(context, path);
+                    path = path.substring(0, path.lastIndexOf('/'));
+                }
+            } else {// 如果是文件
+                InputStream is = context.getAssets().open(path);
+                FileOutputStream fos = new FileOutputStream(new File(context.getFilesDir()
+                        +"/"+ path));
+                byte[] buffer = new byte[1024];
+                int count = 0;
+                while (true) {
+                    count++;
+                    int len = is.read(buffer);
+                    if (len == -1) {
+                        break;
+                    }
+                    fos.write(buffer, 0, len);
+                }
+                is.close();
+                fos.close();
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
 
     public static String readLine(String name) {
         String tmp = null;
